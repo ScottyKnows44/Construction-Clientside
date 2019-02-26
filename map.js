@@ -20,13 +20,6 @@ ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
 
   module.array = [];
 
-  Project.prototype.toHtml = function() {
-    let template = Handlebars.compile($('#table-template').text());
-    return template(this);
-  };
-
-  $('#book-list').append(Project.toHtml());
-
   Project.loadProject = rows => module.array = rows.map(place => new Project(place));
 
   Project.getArray = callback =>
