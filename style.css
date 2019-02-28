@@ -6,3 +6,20 @@ body {
   color: white;
   font-family: 'Roboto Mono', monospace;
 }
+
+th {
+  border: 1px solid black;
+}
+
+td {
+  border: 1px solid black;
+}
+
+#table {
+  width: 90%;
+  margin: 0px auto;
+}
+
+.button{
+  color: black;
+}

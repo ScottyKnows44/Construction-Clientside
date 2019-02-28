@@ -11,25 +11,38 @@ ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
 (function(module) {
 
   function Project (rawDataObj) {
-    this.book_id = rawDataObj.location;
-    this.title = rawDataObj.dates;
-    this.author = rawDataObj.projectname;
-    this.isbn = rawDataObj.url;
+    this.location = rawDataObj.location;
+    this.dates = rawDataObj.dates;
+    this.projectname = rawDataObj.projectname;
+    this.url = rawDataObj.url;
     this.description = rawDataObj.description;
   }
 
   module.array = [];
 
-  Project.loadProject = rows => module.array = rows.map(place => new Project(place));
-
   Project.getArray = callback =>
     $.get(`${ENV.apiUrl}/projects/seattle`)
       .then( results => {
-        Project.loadProject(results);
+        let tableData = '';
+    
+        $.each(results, function (i, value) {
+          tableData += '<tr>';
+          tableData += '<td>'+ value.location +'</td>';
+          tableData += '<td>'+ value.dates +'</td>';
+          tableData += '<td>'+ value.projectname +'</td>';
+          tableData += '<td>'+ value.url +'</td>';
+          tableData += '<td>'+ value.description +'</td>';
+          tableData += '</tr>';
+          return i <10;
+        });
+        $('#table').append(tableData);
         if (callback) callback();
       });
 
-
   Project.getArray();
+
+  
+
+  module.Project = Project;
 
 })(app);
