@@ -24,7 +24,7 @@ ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
     $.get(`${ENV.apiUrl}/projects/seattle`)
       .then( results => {
         let tableData = '';
-    
+        module.array.push(results);
         $.each(results, function (i, value) {
           tableData += '<tr>';
           tableData += '<td>'+ value.location +'</td>';
@@ -39,10 +39,45 @@ ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
         if (callback) callback();
       });
 
+
+  function buttonEvents() {
+
+    let prevous = document.getElementById('prevous');
+    let next = document.getElementById('next');
+
+    prevous.addEventListener('click', prevousButton);
+    next.addEventListener('click', nextButton);
+
+    function prevousButton(event) {
+      event.preventDefault();
+      console.log('prevous');
+
+    }
+
+    function nextButton(event) {
+      event.preventDefault();
+
+      let tableData = '';
+
+      for(let i=10; i < 20; i++){
+        tableData += '<tr>';
+        tableData += '<td>'+ module.array[i].location +'</td>';
+        tableData += '<td>'+ module.array[i].dates +'</td>';
+        tableData += '<td>'+ module.array[i].projectname +'</td>';
+        tableData += '<td>'+ module.array[i].url +'</td>';
+        tableData += '<td>'+ module.array[i].description +'</td>';
+        tableData += '</tr>';
+
+      }
+      $('#table').append(tableData);
+      console.log('next');
+
+    }
+  }
+
   Project.getArray();
-
-  
-
+  buttonEvents();
+  console.log(module.array);
   module.Project = Project;
 
 })(app);
